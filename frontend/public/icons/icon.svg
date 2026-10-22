@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#DC2626"/>
+      <stop offset="100%" stop-color="#991B1B"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <!-- Background Rounded Rect -->
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  
+  <!-- Outer ring -->
+  <circle cx="256" cy="256" r="190" fill="none" stroke="#FFFFFF" stroke-opacity="0.25" stroke-width="14"/>
+  <circle cx="256" cy="256" r="160" fill="#FFFFFF" fill-opacity="0.12"/>
+  
+  <!-- SOS Phone Icon & Alert Emblem -->
+  <g filter="url(#glow)">
+    <!-- Shield / Alert Star -->
+    <path d="M256 80 L300 168 L398 182 L327 251 L344 348 L256 302 L168 348 L185 251 L114 182 L212 168 Z" fill="#FACC15" opacity="0.2"/>
+    
+    <!-- Phone handset -->
+    <path d="M210 160 C202 160 194 163 188 169 L162 195 C154 203 150 215 152 227 C160 279 191 328 238 368 C280 404 330 424 378 424 C388 424 398 420 405 413 L431 387 C443 375 443 355 431 343 L377 289 C365 277 345 277 333 289 L315 307 C309 303 294 293 274 273 C254 253 244 238 240 232 L258 214 C270 202 270 182 258 170 L226 138 C221 133 216 130 210 130 Z" fill="#FFFFFF"/>
+    
+    <!-- SOS Bold Badge text -->
+    <text x="256" y="468" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="52" fill="#FFFFFF" text-anchor="middle" letter-spacing="4">SOS NỘI BỘ</text>
+  </g>
+</svg>

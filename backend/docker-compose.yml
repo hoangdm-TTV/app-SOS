@@ -1,0 +1,73 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: sos_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-sos_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sos_secret_password}
+      POSTGRES_DB: ${POSTGRES_DB:-sos_db}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-sos_user} -d ${POSTGRES_DB:-sos_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - sos_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: sos_redis
+    restart: always
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - sos_network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sos_backend
+    restart: always
+    environment:
+      - ENVIRONMENT=production
+      - DEBUG=false
+      - DATABASE_URL=postgresql+asyncpg://sos_user:sos_secret_password@postgres:5432/sos_db
+      - SYNC_DATABASE_URL=postgresql://sos_user:sos_secret_password@postgres:5432/sos_db
+      - REDIS_URL=redis://redis:6379/0
+      - FRONTEND_BASE_URL=${FRONTEND_BASE_URL:-https://sos.company.internal}
+      - ZALO_ZNS_MOCK_MODE=${ZALO_ZNS_MOCK_MODE:-true}
+      - ZALO_APP_ID=${ZALO_APP_ID:-your_zalo_app_id}
+      - ZALO_APP_SECRET=${ZALO_APP_SECRET:-your_zalo_app_secret}
+      - ZALO_OA_ID=${ZALO_OA_ID:-your_zalo_oa_id}
+      - ZALO_ACCESS_TOKEN=${ZALO_ACCESS_TOKEN:-your_zalo_access_token}
+      - ZALO_REFRESH_TOKEN=${ZALO_REFRESH_TOKEN:-your_zalo_refresh_token}
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - sos_network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  sos_network:
+    driver: bridge
