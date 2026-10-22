@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { AlertTriangle, PhoneCall, Headphones, Star, QrCode, ArrowRight } from 'lucide-react';
+import { AlertTriangle, PhoneCall, Headphones, Star, QrCode, ArrowRight, BarChart3 } from 'lucide-react';
 
 export default function HomePage() {
   return (
@@ -121,6 +121,27 @@ export default function HomePage() {
               </div>
             </div>
             <ArrowRight className="w-5 h-5 text-slate-500 group-hover:text-emerald-400 transition-colors" />
+          </Link>
+
+          <Link
+            href="/dashboard"
+            className="flex items-center justify-between p-4 rounded-xl bg-slate-900 border border-purple-900/40 hover:border-purple-500 transition-all active:scale-[0.98] group"
+          >
+            <div className="flex items-center space-x-3">
+              <div className="p-2.5 rounded-lg bg-purple-500/10 text-purple-400 border border-purple-500/20 group-hover:bg-purple-500/20 transition-colors">
+                <BarChart3 className="w-5 h-5" />
+              </div>
+              <div className="text-left">
+                <div className="text-base font-bold text-white flex items-center gap-1.5">
+                  Báo Cáo & Phân Tích (BI)
+                  <span className="text-[10px] bg-purple-600 text-white px-2 py-0.5 rounded-full font-medium">Lãnh Đạo</span>
+                </div>
+                <div className="text-xs text-slate-400">
+                  Heatmap điểm đen, KPI xử lý & khung giờ cao điểm
+                </div>
+              </div>
+            </div>
+            <ArrowRight className="w-5 h-5 text-slate-500 group-hover:text-purple-400 transition-colors" />
           </Link>
         </div>
       </div>
